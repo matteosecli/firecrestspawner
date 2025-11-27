@@ -605,8 +605,8 @@ class FirecRESTSpawnerBase(Spawner):
                     decoded_string = byte_content.decode('utf-8')
                     response_dict = json.loads(decoded_string)
                     message = response_dict["message"]
-            except Exception:
-                pass
+            except Exception as e:
+                self.log.info(f"Could not extract detailed error message: {e}")
 
             raise RuntimeError(message)
         while True:
