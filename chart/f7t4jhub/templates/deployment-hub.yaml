@@ -30,14 +30,14 @@ spec:
       {{- end }}
     spec:
       securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
           fsGroup: 1000
       containers:
       - name: hub
         image: {{ .Values.hub.image }}
         imagePullPolicy: Always
         securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -114,9 +114,11 @@ spec:
           requests:
             cpu: "200m"
             memory: "256Mi"
+            ephemeral-storage: "500Mi"
           limits:
             cpu: "500m"
             memory: "512Mi"
+            ephemeral-storage: "1Gi"
       volumes:
         - name: db-pvc
           persistentVolumeClaim:

@@ -14,11 +14,15 @@ spec:
       labels:
         app: proxy
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: proxy
         image: {{ .Values.proxy.image }}
         imagePullPolicy: Always
         securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -53,6 +57,8 @@ spec:
           requests:
             cpu: "100m"
             memory: "128Mi"
+            ephemeral-storage: "200Mi"
           limits:
             cpu: "200m"
             memory: "256Mi"
+            ephemeral-storage: "500Mi"
